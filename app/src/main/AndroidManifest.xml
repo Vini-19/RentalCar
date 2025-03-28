@@ -13,6 +13,30 @@
         android:theme="@style/Theme.RentalCar"
         tools:targetApi="31">
         <activity
+            android:name=".Clientes"
+            android:exported="false" />
+        <activity
+            android:name=".ProcesoRenta"
+            android:exported="false" />
+        <activity
+            android:name=".RentaCarro"
+            android:exported="false" />
+        <activity
+            android:name=".Carros"
+            android:exported="false" />
+        <activity
+            android:name=".Categorias"
+            android:exported="false" />
+        <activity
+            android:name=".Productos"
+            android:exported="false" />
+        <activity
+            android:name=".CrearUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
