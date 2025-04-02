@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -31,11 +33,8 @@
             android:name=".Categorias"
             android:exported="false" />
         <activity
-            android:name=".Productos"
-            android:exported="false" />
-        <activity
             android:name=".CrearUsuario"
-            android:exported="false" />
+            android:exported="true" /> <!-- Cambié aquí a "true" -->
         <activity
             android:name=".Login"
             android:exported="true">
