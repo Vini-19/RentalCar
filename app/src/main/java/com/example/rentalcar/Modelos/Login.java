@@ -16,7 +16,6 @@ public class Login extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase BaseDeDatos) {
         BaseDeDatos.execSQL("create table Usuarios(codigo int primary key,nombre text, campus text)");
-
     }
 
     //metodo Upgrade

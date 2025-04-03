@@ -31,4 +31,12 @@ public class Menu extends AppCompatActivity {
 
 
     }
+
+    public void Clientes(View view){
+
+        Intent Client = new Intent(this,Clientes.class);
+        startActivity(Client);
+
+
+    }
 }
