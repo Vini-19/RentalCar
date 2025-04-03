@@ -1,5 +1,6 @@
 package com.example.rentalcar;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,9 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-import androidx.activity.EdgeToEdge;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.rentalcar.Modelos.ImageHandler;
@@ -26,7 +28,7 @@ public class CrearUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_crear_usuario);
 
         imgAvatar = findViewById(R.id.imgAvatar);
-        Button btnSelectImage = findViewById(R.id.button4);
+        ImageButton btnSelectImage = findViewById(R.id.imgProfile);
         imageHandler = new ImageHandler(this);
 
         btnSelectImage.setOnClickListener(v -> imageHandler.requestImage());
