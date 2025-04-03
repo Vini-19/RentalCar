@@ -5,11 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".MainActivity">
+    tools:context=".Menu">
 
     <Button
-        android:id="@+id/btnRenta"
+        android:id="@+id/btnRenta2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#4CAF50"
@@ -22,7 +21,7 @@
         app:layout_constraintVertical_bias="0.645" />
 
     <Button
-        android:id="@+id/btnUsuarios"
+        android:id="@+id/btnUsuarios2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#4CAF50"
@@ -35,7 +34,7 @@
         app:layout_constraintVertical_bias="0.329" />
 
     <Button
-        android:id="@+id/btnCarros"
+        android:id="@+id/btnCarros2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#4CAF50"
@@ -48,7 +47,7 @@
         app:layout_constraintVertical_bias="0.54" />
 
     <Button
-        android:id="@+id/btnClientes"
+        android:id="@+id/btnClientes2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#4CAF50"
@@ -61,7 +60,7 @@
         app:layout_constraintVertical_bias="0.43" />
 
     <Button
-        android:id="@+id/btnRegresar"
+        android:id="@+id/btnRegresar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#FF0026"
@@ -72,5 +71,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

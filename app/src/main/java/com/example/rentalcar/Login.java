@@ -51,8 +51,8 @@ public class Login extends AppCompatActivity {
             admin = new mLogin(this, "dbRentCar", null, 1);
 
             if (admin.verificarLogin(email, password)) {
-                Intent logger = new Intent(this, RentaCarro.class);
-                startActivity(logger);
+                Intent menu = new Intent(this, Menu.class);
+                startActivity(menu);
 
             } else {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
