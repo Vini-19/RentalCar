@@ -5,19 +5,36 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".Categorias">
+
+    <Button
+        android:id="@+id/btnRegresar3"
+        android:layout_width="112dp"
+        android:layout_height="57dp"
+        android:backgroundTint="#ca6f1e"
+        android:onClick="Menu"
+        android:text="Regresar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Categorias"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.064" />
 
     <TextView
         android:id="@+id/resultado"
@@ -33,14 +50,14 @@
         android:layout_width="240dp"
         android:layout_height="65dp"
         android:ems="10"
-        android:hint="Descripc"
+        android:hint="Descripción"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.367" />
+        app:layout_constraintVertical_bias="0.391" />
 
     <EditText
         android:id="@+id/txtNombre"
@@ -54,7 +71,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.196" />
+        app:layout_constraintVertical_bias="0.223" />
 
     <EditText
         android:id="@+id/Resultado"
@@ -74,6 +91,7 @@
         android:id="@+id/btnGuardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#4CAF50"
         android:onClick="guardarCategoria"
         android:text="guardar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,6 +105,7 @@
         android:id="@+id/btnBuscar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#2196F3"
         android:onClick="buscarCategoria"
         android:text="Buscar"
         app:layout_constraintBottom_toBottomOf="parent"

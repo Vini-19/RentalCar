@@ -1,5 +1,6 @@
 package com.example.rentalcar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -74,5 +75,14 @@ public class Categorias extends AppCompatActivity {
     protected void onDestroy() {
         dbHelper.close(); // Cerrar la conexión a la BD al salir
         super.onDestroy();
+    }
+
+
+    public void Menu(View view){
+
+        Intent Menu = new Intent(this,Menu.class);
+        startActivity(Menu);
+
+
     }
 }

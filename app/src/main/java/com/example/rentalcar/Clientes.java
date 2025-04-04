@@ -1,6 +1,7 @@
 package com.example.rentalcar;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -114,7 +115,13 @@ public class Clientes extends AppCompatActivity {
 
         }
     }
+    public void Menu(View view){
 
+        Intent Menu = new Intent(this,Menu.class);
+        startActivity(Menu);
+
+
+    }
     public void eliminar (View view) {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
