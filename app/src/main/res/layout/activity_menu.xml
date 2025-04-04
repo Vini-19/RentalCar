@@ -8,6 +8,38 @@
     android:background="@drawable/background"
     tools:context=".Menu">
 
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#F6F6F6"
+        android:contentDescription="@string/bottom_sheet_behavior"
+        android:onClick="Login"
+        android:scaleType="centerInside"
+        app:layoutDescription="@xml/backup_rules"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051"
+        app:srcCompat="@drawable/bakcbutton" />
+
+    <ImageButton
+        android:id="@+id/imgProfile6"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#F6F6F6"
+        android:contentDescription="photo"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.747"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051"
+        app:srcCompat="@drawable/user_solid" />
+
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="108dp"
@@ -17,74 +49,120 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.162"
+        app:layout_constraintVertical_bias="0.232"
         app:srcCompat="@drawable/logotipe" />
 
-    <Button
-        android:id="@+id/btnRenta2"
+    <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#4CAF50"
-        android:text="Rentas de Carro"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.645" />
-
-    <Button
-        android:id="@+id/btnUsuarios2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#4CAF50"
         android:text="Usuarios"
+        android:textColor="#A69C9C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.329" />
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile5"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/btnCarros2"
+    <TextView
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#4CAF50"
-        android:onClick="Categoria"
-        android:text="Carros"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54" />
-
-    <Button
-        android:id="@+id/btnClientes2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#4CAF50"
-        android:onClick="Clientes"
         android:text="Clientes"
+        android:textColor="#A69C9C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.752"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43" />
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile7"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/btnRegresar2"
+    <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FF0026"
-        android:onClick="Login"
-        android:text="Cerrar Sesión"
+        android:text="Rentas de Carro"
+        android:textColor="#A69C9C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintHorizontal_bias="0.254"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile8"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/imgProfile8"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:backgroundTint="#F6F6F6"
+        android:contentDescription="photo"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.277"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.476"
+        app:srcCompat="@drawable/cash_register_solid" />
+
+    <ImageButton
+        android:id="@+id/imgProfile7"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:backgroundTint="#F6F6F6"
+        android:contentDescription="photo"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toEndOf="@+id/imgProfile8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.476"
+        app:srcCompat="@drawable/ticket_solid" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carros"
+        android:textColor="#A69C9C"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.295"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/imgProfile5"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:backgroundTint="#F6F6F6"
+        android:contentDescription="photo"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toEndOf="@+id/imgProfile2"
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile7"
+        app:layout_constraintVertical_bias="0.371"
+        app:srcCompat="@drawable/key_solid" />
+
+    <ImageButton
+        android:id="@+id/imgProfile2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:backgroundTint="#F6F6F6"
+        android:contentDescription="photo"
+        android:onClick="Categoria"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile8"
+        app:layout_constraintVertical_bias="0.371"
+        app:srcCompat="@drawable/carsolid" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

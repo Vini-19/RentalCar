@@ -27,26 +27,25 @@ public class mLogin extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Método para verificar el login
     public boolean verificarLogin(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         boolean usuarioValido = false;
 
         try {
-            // Consulta SQL para verificar si el usuario con ese email y contraseña existe
+
             String query = "SELECT * FROM users WHERE email = ? AND password = ?";
             cursor = db.rawQuery(query, new String[]{email, password});
 
-            // Si hay registros que coinciden
+
             if (cursor != null && cursor.getCount() > 0) {
-                cursor.moveToFirst(); // Nos aseguramos de movernos al primer registro encontrado
-                usuarioValido = true;  // Si encuentra el usuario, es válido
+                cursor.moveToFirst();
+                usuarioValido = true;
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Captura cualquier excepción
+            e.printStackTrace(); 
         } finally {
-            // Cerramos el cursor y la base de datos de manera segura
+
             if (cursor != null) {
                 cursor.close();
             }
