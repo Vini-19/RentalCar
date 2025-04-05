@@ -9,6 +9,14 @@ import androidx.annotation.Nullable;
 
 public class mLogin extends SQLiteOpenHelper {
 
+    // Atributos estáticos del usuario actual
+    public static int codigoUsuario;
+    public static String nombreUsuario;
+    public static String correoUsuario;
+    public static String passwordUsuario;
+    public static String identidadUsuario;
+    public static byte[] avatarUsuario;
+
     // Constructor
     public mLogin(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -27,31 +35,82 @@ public class mLogin extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Verificar credenciales
     public boolean verificarLogin(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         boolean usuarioValido = false;
 
         try {
-
             String query = "SELECT * FROM users WHERE email = ? AND password = ?";
             cursor = db.rawQuery(query, new String[]{email, password});
 
-
-            if (cursor != null && cursor.getCount() > 0) {
-                cursor.moveToFirst();
+            if (cursor != null && cursor.moveToFirst()) {
                 usuarioValido = true;
+                cargarDatosUsuario(email);
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         } finally {
-
-            if (cursor != null) {
-                cursor.close();
-            }
+            if (cursor != null) cursor.close();
+            cargarDatosUsuario(email);
             db.close();
         }
 
         return usuarioValido;
+    }
+
+    // Actualizar perfil
+    public boolean actualizarPerfil(int codigo, String name, String email, String password, String identity, byte[] avatar) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            String query = "UPDATE users SET name = ?, email = ?, password = ?, identity = ?, avatar = ? WHERE codigo = ?";
+            Object[] args = new Object[]{name, email, password, identity, avatar, codigo};
+            db.execSQL(query, args);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            db.close();
+        }
+    }
+
+    // Cargar los datos del usuario actual
+    public void cargarDatosUsuario(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            String query = "SELECT * FROM users WHERE email = ?";
+            cursor = db.rawQuery(query, new String[]{email});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                int idx;
+
+                if ((idx = cursor.getColumnIndex("codigo")) != -1)
+                    codigoUsuario = cursor.getInt(idx);
+
+                if ((idx = cursor.getColumnIndex("name")) != -1)
+                    nombreUsuario = cursor.getString(idx);
+
+                if ((idx = cursor.getColumnIndex("email")) != -1)
+                    correoUsuario = cursor.getString(idx);
+
+                if ((idx = cursor.getColumnIndex("password")) != -1)
+                    passwordUsuario = cursor.getString(idx);
+
+                if ((idx = cursor.getColumnIndex("identity")) != -1)
+                    identidadUsuario = cursor.getString(idx);
+
+                if ((idx = cursor.getColumnIndex("avatar")) != -1)
+                    avatarUsuario = cursor.getBlob(idx);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
     }
 }
