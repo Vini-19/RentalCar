@@ -5,22 +5,86 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/design_default_color_background"
     tools:context=".Categorias">
 
-    <Button
-        android:id="@+id/btnRegresar3"
-        android:layout_width="112dp"
-        android:layout_height="57dp"
-        android:backgroundTint="#ca6f1e"
+    <!-- ScrollView para contener la tabla y permitir desplazamiento -->
+
+    <ImageButton
+        android:id="@+id/btnRegresar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#F6F6F6"
+        android:contentDescription="@string/bottom_sheet_behavior"
         android:onClick="Menu"
-        android:text="Regresar"
+        android:scaleType="centerInside"
+        app:layoutDescription="@xml/backup_rules"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintHorizontal_bias="0.953"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintVertical_bias="0.024"
+        app:srcCompat="@drawable/bakcbutton" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/txtNombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <!-- TableLayout mejorado -->
+        <TableLayout
+            android:id="@+id/TablaCategorias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <!-- Fila de encabezados -->
+            <TableRow
+                android:layout_marginBottom="2dp"
+                android:background="#6200EE">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="ID"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Nombre"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Descripción"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <!-- Todos tus otros elementos existentes (sin cambios) -->
 
     <TextView
         android:id="@+id/textView4"
@@ -34,7 +98,7 @@
         app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.064" />
+        app:layout_constraintVertical_bias="0.103" />
 
     <TextView
         android:id="@+id/resultado"
@@ -45,19 +109,33 @@
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/txtDescripc"
-        android:layout_width="240dp"
-        android:layout_height="65dp"
-        android:ems="10"
-        android:hint="Descripción"
-        android:inputType="text"
+    <Button
+        android:id="@+id/btnBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2196F3"
+        android:onClick="buscarCategoria"
+        android:text="Buscar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.391" />
+        app:layout_constraintVertical_bias="0.739" />
+
+    <Button
+        android:id="@+id/btnLimpiar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#CDDC39"
+        android:onClick="LimpiarFiltros"
+        android:text="Limpiar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.736"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.857" />
 
     <EditText
         android:id="@+id/txtNombre"
@@ -71,21 +149,21 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.223" />
+        app:layout_constraintVertical_bias="0.563" />
 
     <EditText
-        android:id="@+id/Resultado"
+        android:id="@+id/txtDescripc"
         android:layout_width="240dp"
         android:layout_height="65dp"
         android:ems="10"
-        android:hint="Nombre"
+        android:hint="Descripción"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.755" />
+        app:layout_constraintVertical_bias="0.66" />
 
     <Button
         android:id="@+id/btnGuardar"
@@ -96,23 +174,23 @@
         android:text="guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.271"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.739" />
 
     <Button
-        android:id="@+id/btnBuscar"
+        android:id="@+id/BtnEliminar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#2196F3"
-        android:onClick="buscarCategoria"
-        android:text="Buscar"
+        android:backgroundTint="#F60000"
+        android:onClick="eliminarCategoria"
+        android:text="Eliminar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintHorizontal_bias="0.273"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.857" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -101,4 +101,37 @@ public class Mcategoria extends SQLiteOpenHelper {
         db.close();
         return existe;
     }
+
+    // Método para obtener todas las categorías
+    public Cursor obtenerTodasLasCategorias() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM categorias", null);
+    }
+    // Método para eliminar categoría por nombre (insensible a mayúsculas)
+    public boolean eliminarCategoriaPorNombre(String nombre) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            int filasEliminadas = db.delete(
+                    TABLE_CATEGORIAS,
+                    COLUMN_NOMBRE + " = ? COLLATE NOCASE",
+                    new String[]{nombre}
+            );
+            return filasEliminadas > 0;
+        } catch (Exception e) {
+            Log.e("DB", "Error al eliminar categoría: " + e.getMessage());
+            return false;
+        } finally {
+            db.close();
+        }
+    }
+    public Cursor obtenerCategoriaPorNombre(String nombre) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(
+                TABLE_CATEGORIAS,
+                new String[]{COLUMN_ID, COLUMN_NOMBRE, COLUMN_DESCRIPCION},
+                COLUMN_NOMBRE + " = ? COLLATE NOCASE",
+                new String[]{nombre},
+                null, null, null
+        );
+    }
 }
