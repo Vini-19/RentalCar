@@ -27,7 +27,6 @@ public class Categorias extends AppCompatActivity {
     private EditText txtNombre, txtDescripcion;
     private Mcategoria dbHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
