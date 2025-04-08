@@ -104,6 +104,37 @@ public class Mcarros extends SQLiteOpenHelper {
         db.close();
         return affectedRows > 0;
     }
+    // ... (código anterior se mantiene igual)
+
+    // ... (código anterior se mantiene igual)
+
+    public Cursor buscarCarros(String criterio) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Búsqueda por modelo o marca (insensible a mayúsculas)
+        String query = "SELECT c.*, cat." + COLUMN_NOMBRE + " as categoria_nombre " +
+                "FROM " + TABLE_CARROS + " c " +
+                "LEFT JOIN " + TABLE_CATEGORIAS + " cat ON c." + COLUMN_CATEGORIA_ID + " = cat." + COLUMN_ID + " " +
+                "WHERE c." + COLUMN_MODELO + " LIKE ? COLLATE NOCASE OR " +
+                "c." + COLUMN_MARCA + " LIKE ? COLLATE NOCASE";
+
+        return db.rawQuery(query, new String[]{"%" + criterio + "%", "%" + criterio + "%"});
+    }
+
+    public Cursor buscarCarrosPorCategoria(int categoriaId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT c.*, cat." + COLUMN_NOMBRE + " as categoria_nombre " +
+                "FROM " + TABLE_CARROS + " c " +
+                "LEFT JOIN " + TABLE_CATEGORIAS + " cat ON c." + COLUMN_CATEGORIA_ID + " = cat." + COLUMN_ID + " " +
+                "WHERE c." + COLUMN_CATEGORIA_ID + " = ?";
+
+        return db.rawQuery(query, new String[]{String.valueOf(categoriaId)});
+    }
+
+// ... (el resto del código se mantiene igual)
+
+// ... (el resto del código se mantiene igual)
 
     public Cursor obtenerCategorias() {
         return getReadableDatabase().query(

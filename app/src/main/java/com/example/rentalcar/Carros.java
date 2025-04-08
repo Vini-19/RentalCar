@@ -232,4 +232,35 @@ public class Carros extends AppCompatActivity {
         dbHelper.close();
         super.onDestroy();
     }
+
+    // ... (código anterior se mantiene igual)
+
+    public void buscarCarro(View view) {
+        String criterio = etModelo.getText().toString().trim();
+
+        if (criterio.isEmpty()) {
+            mostrarMensaje("Ingrese un modelo para buscar");
+            cargarCarros(); // Mostrar todos si no hay criterio
+            return;
+        }
+
+        clearTable();
+
+        try (Cursor cursor = dbHelper.buscarCarros(criterio)) {
+            if (cursor.getCount() == 0) {
+                agregarMensajeTabla("No se encontraron carros con: " + criterio);
+                return;
+            }
+
+            while (cursor.moveToNext()) {
+                tablaCarros.addView(createTableRow(cursor));
+            }
+
+            mostrarMensaje("Encontrados: " + cursor.getCount() + " carros");
+        }
+    }
+
+// ... (el resto del código se mantiene igual)
+
+
 }
