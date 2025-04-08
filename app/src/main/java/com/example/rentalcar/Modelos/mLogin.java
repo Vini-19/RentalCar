@@ -1,5 +1,6 @@
 package com.example.rentalcar.Modelos;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -63,17 +64,17 @@ public class mLogin extends SQLiteOpenHelper {
     // Actualizar perfil
     public boolean actualizarPerfil(int codigo, String name, String email, String password, String identity, byte[] avatar) {
         SQLiteDatabase db = this.getWritableDatabase();
-        try {
-            String query = "UPDATE users SET name = ?, email = ?, password = ?, identity = ?, avatar = ? WHERE codigo = ?";
-            Object[] args = new Object[]{name, email, password, identity, avatar, codigo};
-            db.execSQL(query, args);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            db.close();
-        }
+        ContentValues values = new ContentValues();
+
+        values.put("name", name);
+        values.put("email", email);
+        values.put("password", password);
+        values.put("identity", identity);
+        values.put("avatar", avatar);
+
+        int filas = db.update("users", values, "codigo = ?", new String[]{String.valueOf(codigo)});
+        db.close();
+        return filas > 0;
     }
 
     // Cargar los datos del usuario actual
