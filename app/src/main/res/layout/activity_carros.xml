@@ -147,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#4CAF50"
+                android:onClick="guardarCarros"
                 android:text="Guardar" />
 
             <Button
@@ -155,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#2196F3"
+                android:onClick="buscarCarro"
                 android:text="Buscar" />
         </LinearLayout>
 
@@ -170,6 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#F60000"
+                android:onClick="eliminarCarro"
                 android:text="Eliminar" />
 
             <Button
@@ -178,6 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#CDDC39"
+                android:onClick="LimpiarFiltros"
                 android:text="Limpiar" />
         </LinearLayout>
 

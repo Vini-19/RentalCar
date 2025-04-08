@@ -1,7 +1,12 @@
 package com.example.rentalcar;
 
+import static com.example.rentalcar.Modelos.Mcarros.COLUMN_ID;
+import static com.example.rentalcar.Modelos.Mcarros.COLUMN_MODELO;
+import static com.example.rentalcar.Modelos.Mcarros.TABLE_CARROS;
+
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,17 +53,6 @@ public class Carros extends AppCompatActivity {
         cargarCategorias();
         cargarCarros();
 
-        Button btnGuardar = findViewById(R.id.btnGuardar);
-        btnGuardar.setOnClickListener(v -> guardarCarro());
-
-        Button btnBuscar = findViewById(R.id.btnBuscar);
-        btnBuscar.setOnClickListener(v -> buscarCarro());
-
-        Button btnEliminar = findViewById(R.id.BtnEliminar);
-        btnEliminar.setOnClickListener(v -> eliminarCarro());
-
-        Button btnLimpiar = findViewById(R.id.btnLimpiar);
-        btnLimpiar.setOnClickListener(v -> limpiarCampos());
     }
 
     private void cargarCategorias() {
@@ -157,7 +151,7 @@ public class Carros extends AppCompatActivity {
         tablaCarros.addView(row);
     }
 
-    private void guardarCarro() {
+    public void guardarCarros(View view) {
         String marca = etMarca.getText().toString().trim();
         String modelo = etModelo.getText().toString().trim();
         String anioStr = etAnio.getText().toString().trim();
@@ -190,21 +184,53 @@ public class Carros extends AppCompatActivity {
         }
     }
 
-    private void buscarCarro() {
+    public void buscarCarro(View view) {
         String marca = etMarca.getText().toString().trim();
         // Implementar búsqueda según necesidad
         Toast.makeText(this, "Funcionalidad de búsqueda en desarrollo", Toast.LENGTH_SHORT).show();
     }
 
-    private void eliminarCarro() {
-        String modelo = etModelo.getText().toString().trim();
+    public void eliminarCarro(View view) {
+        String modelo = etModelo.getText().toString().trim(); // Aquí tomas el texto del EditText
         if (modelo.isEmpty()) {
             Toast.makeText(this, "Ingrese el modelo a eliminar", Toast.LENGTH_SHORT).show();
             return;
         }
-        // Implementar eliminación según necesidad
-        Toast.makeText(this, "Funcionalidad de eliminación en desarrollo", Toast.LENGTH_SHORT).show();
+
+        // Buscar el carro por su modelo para obtener su ID
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(
+                TABLE_CARROS,
+                new String[]{COLUMN_ID},
+                COLUMN_MODELO + " = ? COLLATE NOCASE",
+                new String[]{modelo},
+                null, null, null
+
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int carroId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+            cursor.close();
+
+            // Ahora eliminamos el carro utilizando el ID
+            boolean eliminado = dbHelper.eliminarCarro(carroId);
+            if (eliminado) {
+                Toast.makeText(this, "Carro eliminado correctamente", Toast.LENGTH_SHORT).show();
+                cargarCarros();
+                // Aquí puedes actualizar la lista de carros si tienes alguna vista que las muestre
+            } else {
+                Toast.makeText(this, "Error al eliminar el carro", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (cursor != null) {
+                cursor.close();
+            }
+            Toast.makeText(this, "No se encontró el carro con ese modelo", Toast.LENGTH_SHORT).show();
+        }
+
+        db.close();
     }
+
 
     private void limpiarCampos() {
         etMarca.setText("");
@@ -222,6 +248,14 @@ public class Carros extends AppCompatActivity {
     protected void onDestroy() {
         dbHelper.close();
         super.onDestroy();
+    }
+
+    public void LimpiarFiltros(View view) {
+        etMarca.setText("");
+        etModelo.setText("");
+        etAnio.setText("");
+        etPrecio.setText("");
+        cargarCategorias(); // Recargar todas las categorías
     }
 
 

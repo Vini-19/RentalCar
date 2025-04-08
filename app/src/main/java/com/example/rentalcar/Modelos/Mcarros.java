@@ -81,11 +81,11 @@ public class Mcarros extends SQLiteOpenHelper {
 
     public boolean eliminarCarro(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete(TABLE_CARROS, COLUMN_ID + " = ?",
-                new String[]{String.valueOf(id)});
+        int result = db.delete(TABLE_CARROS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
         return result > 0;
     }
+
 
     public Cursor obtenerCategorias() {
         SQLiteDatabase db = this.getReadableDatabase();
