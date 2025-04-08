@@ -1,10 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".Carros">
 
+    <!-- ScrollView para contener la tabla -->
+
+    <ScrollView
+        android:layout_width="378dp"
+        android:layout_height="251dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TableLayout
+            android:id="@+id/TablaCarros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <TableRow
+                android:background="#6200EE"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ID"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Marca"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Modelo"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Año"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Precio"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Categoría"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
+
+    <!-- Formulario para ingresar datos -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintVertical_bias="1.0">
+
+        <EditText
+            android:id="@+id/txtMarca"
+            android:layout_width="364dp"
+            android:layout_height="58dp"
+            android:hint="Marca"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txtModelo"
+            android:layout_width="368dp"
+            android:layout_height="56dp"
+            android:hint="Modelo"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txtAnio"
+            android:layout_width="368dp"
+            android:layout_height="57dp"
+            android:hint="Año"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/txtPrecio"
+            android:layout_width="369dp"
+            android:layout_height="58dp"
+            android:hint="Precio"
+            android:inputType="numberDecimal" />
+
+        <Spinner
+            android:id="@+id/spinnerCategorias"
+            android:layout_width="365dp"
+            android:layout_height="53dp" />
+
+        <!-- Botones de acción -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#4CAF50"
+                android:text="Guardar" />
+
+            <Button
+                android:id="@+id/btnBuscar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#2196F3"
+                android:text="Buscar" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/BtnEliminar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#F60000"
+                android:text="Eliminar" />
+
+            <Button
+                android:id="@+id/btnLimpiar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#CDDC39"
+                android:text="Limpiar" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnRegresar3"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="#F6F6F6"
+            android:contentDescription="@string/bottom_sheet_behavior"
+            android:onClick="Menu"
+            android:scaleType="centerInside"
+            app:layoutDescription="@xml/backup_rules"
+            app:srcCompat="@drawable/bakcbutton" />
+    </LinearLayout>
+
+    <!-- Botón de regresar -->
 </androidx.constraintlayout.widget.ConstraintLayout>

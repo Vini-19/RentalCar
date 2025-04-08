@@ -27,6 +27,7 @@ public class Categorias extends AppCompatActivity {
     private EditText txtNombre, txtDescripcion;
     private Mcategoria dbHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,6 +156,12 @@ public class Categorias extends AppCompatActivity {
 
         Intent Menu = new Intent(this,Menu.class);
         startActivity(Menu);
+    }
+
+    public void Carros(View view){
+
+        Intent car = new Intent(this,Carros.class);
+        startActivity(car);
     }
 
     private void cargarCategorias() {

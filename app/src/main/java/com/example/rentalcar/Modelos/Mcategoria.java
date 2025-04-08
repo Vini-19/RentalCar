@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Mcategoria extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "dbRentCar.db";  // Añadido .db para claridad
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Nombre de la tabla y columnas
     public static final String TABLE_CATEGORIAS = "categorias";

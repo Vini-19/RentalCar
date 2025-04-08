@@ -137,6 +137,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.857" />
 
+    <Button
+        android:id="@+id/btnLimpiar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#CDDC39"
+        android:onClick="Carros"
+        android:text="Carros"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
     <EditText
         android:id="@+id/txtNombre"
         android:layout_width="240dp"
