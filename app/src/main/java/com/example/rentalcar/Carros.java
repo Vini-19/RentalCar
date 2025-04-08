@@ -1,32 +1,15 @@
 package com.example.rentalcar;
 
-import static com.example.rentalcar.Modelos.Mcarros.COLUMN_ID;
-import static com.example.rentalcar.Modelos.Mcarros.COLUMN_MODELO;
-import static com.example.rentalcar.Modelos.Mcarros.TABLE_CARROS;
+import static com.example.rentalcar.Modelos.Mcarros.*;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.rentalcar.Modelos.Mcarros;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Carros extends AppCompatActivity {
     private Mcarros dbHelper;
@@ -34,57 +17,35 @@ public class Carros extends AppCompatActivity {
     private Spinner spinnerCategorias;
     private TableLayout tablaCarros;
     private int selectedCategoriaId = -1;
-    private Map<String, Integer> categoriasMap = new HashMap<>();
+    private final Map<String, Integer> categoriasMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carros);
 
+        initViews();
         dbHelper = new Mcarros(this);
+        setupSpinner();
+        cargarCarros();
+    }
 
+    private void initViews() {
         etMarca = findViewById(R.id.txtMarca);
         etModelo = findViewById(R.id.txtModelo);
         etAnio = findViewById(R.id.txtAnio);
         etPrecio = findViewById(R.id.txtPrecio);
         spinnerCategorias = findViewById(R.id.spinnerCategorias);
         tablaCarros = findViewById(R.id.TablaCarros);
-
-        cargarCategorias();
-        cargarCarros();
-
     }
 
-    private void cargarCategorias() {
-        Cursor cursor = dbHelper.obtenerCategorias();
-        List<String> categorias = new ArrayList<>();
-        categorias.add("Seleccione una categoría");
-        categoriasMap.clear();
-
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(0);
-                String nombre = cursor.getString(1);
-                categorias.add(nombre);
-                categoriasMap.put(nombre, id);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, categorias);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategorias.setAdapter(adapter);
-
+    private void setupSpinner() {
+        cargarCategorias();
         spinnerCategorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    String categoria = parent.getItemAtPosition(position).toString();
-                    selectedCategoriaId = categoriasMap.get(categoria);
-                } else {
-                    selectedCategoriaId = -1;
-                }
+                selectedCategoriaId = position > 0 ?
+                        categoriasMap.get(parent.getItemAtPosition(position).toString()) : -1;
             }
 
             @Override
@@ -94,38 +55,59 @@ public class Carros extends AppCompatActivity {
         });
     }
 
+    private void cargarCategorias() {
+        try (Cursor cursor = dbHelper.obtenerCategorias()) {
+            List<String> categorias = new ArrayList<>();
+            categorias.add("Seleccione una categoría");
+            categoriasMap.clear();
+
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+                String nombre = cursor.getString(1);
+                categorias.add(nombre);
+                categoriasMap.put(nombre, id);
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_spinner_item, categorias);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerCategorias.setAdapter(adapter);
+        }
+    }
+
     private void cargarCarros() {
-        // Limpiar tabla excepto encabezados
+        clearTable();
+
+        try (Cursor cursor = dbHelper.obtenerTodosCarros()) {
+            if (cursor.getCount() == 0) {
+                agregarMensajeTabla("No hay carros registrados");
+                return;
+            }
+
+            while (cursor.moveToNext()) {
+                tablaCarros.addView(createTableRow(cursor));
+            }
+        }
+    }
+
+    private void clearTable() {
         int childCount = tablaCarros.getChildCount();
         if (childCount > 1) {
             tablaCarros.removeViews(1, childCount - 1);
         }
+    }
 
-        Cursor cursor = dbHelper.obtenerTodosCarros();
-        if (cursor.moveToFirst()) {
-            do {
-                TableRow row = new TableRow(this);
+    private TableRow createTableRow(Cursor cursor) {
+        TableRow row = new TableRow(this);
 
-                TextView tvId = crearTextView(String.valueOf(cursor.getInt(0)), 1);
-                TextView tvMarca = crearTextView(cursor.getString(1), 1.5f);
-                TextView tvModelo = crearTextView(cursor.getString(2), 1.5f);
-                TextView tvAnio = crearTextView(String.valueOf(cursor.getInt(3)), 1);
-                TextView tvPrecio = crearTextView("$" + cursor.getDouble(4), 1.5f);
-                TextView tvCategoria = crearTextView(cursor.getString(6), 2);
+        row.addView(crearTextView(String.valueOf(cursor.getInt(0)), 1f));     // ID
+        row.addView(crearTextView(cursor.getString(1), 1.5f));               // Marca
+        row.addView(crearTextView(cursor.getString(2), 1.5f));               // Modelo
+        row.addView(crearTextView(String.valueOf(cursor.getInt(3)), 1f));   // Año
+        row.addView(crearTextView("$" + cursor.getDouble(4), 1.5f));        // Precio
+        row.addView(crearTextView(cursor.getString(6), 2f));                // Categoría
 
-                row.addView(tvId);
-                row.addView(tvMarca);
-                row.addView(tvModelo);
-                row.addView(tvAnio);
-                row.addView(tvPrecio);
-                row.addView(tvCategoria);
-
-                tablaCarros.addView(row);
-            } while (cursor.moveToNext());
-        } else {
-            agregarMensajeTabla("No hay carros registrados");
-        }
-        cursor.close();
+        return row;
     }
 
     private TextView crearTextView(String text, float weight) {
@@ -143,94 +125,90 @@ public class Carros extends AppCompatActivity {
         TextView textView = new TextView(this);
         textView.setText(mensaje);
         textView.setGravity(View.TEXT_ALIGNMENT_CENTER);
+
         TableRow.LayoutParams params = new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT);
         params.span = 6;
+
         row.addView(textView, params);
         tablaCarros.addView(row);
     }
 
     public void guardarCarros(View view) {
-        String marca = etMarca.getText().toString().trim();
-        String modelo = etModelo.getText().toString().trim();
-        String anioStr = etAnio.getText().toString().trim();
-        String precioStr = etPrecio.getText().toString().trim();
+        if (!validarCampos()) return;
 
-        if (marca.isEmpty() || modelo.isEmpty() || anioStr.isEmpty() || precioStr.isEmpty()) {
-            Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
-            return;
+        try {
+            int anio = Integer.parseInt(etAnio.getText().toString());
+            double precio = Double.parseDouble(etPrecio.getText().toString());
+
+            boolean success = dbHelper.agregarCarro(
+                    etMarca.getText().toString(),
+                    etModelo.getText().toString(),
+                    anio,
+                    precio,
+                    selectedCategoriaId
+            );
+
+            mostrarMensaje(success ? "Carro guardado exitosamente" : "Error al guardar el carro");
+
+            if (success) {
+                limpiarCampos();
+                cargarCarros();
+            }
+        } catch (NumberFormatException e) {
+            mostrarMensaje("Año y precio deben ser números válidos");
+        }
+    }
+
+    private boolean validarCampos() {
+        if (etMarca.getText().toString().trim().isEmpty() ||
+                etModelo.getText().toString().trim().isEmpty() ||
+                etAnio.getText().toString().trim().isEmpty() ||
+                etPrecio.getText().toString().trim().isEmpty()) {
+            mostrarMensaje("Todos los campos son obligatorios");
+            return false;
         }
 
         if (selectedCategoriaId == -1) {
-            Toast.makeText(this, "Seleccione una categoría", Toast.LENGTH_SHORT).show();
-            return;
+            mostrarMensaje("Seleccione una categoría");
+            return false;
         }
 
-        try {
-            int anio = Integer.parseInt(anioStr);
-            double precio = Double.parseDouble(precioStr);
-
-            boolean success = dbHelper.agregarCarro(marca, modelo, anio, precio, selectedCategoriaId);
-            if (success) {
-                Toast.makeText(this, "Carro guardado exitosamente", Toast.LENGTH_SHORT).show();
-                limpiarCampos();
-                cargarCarros();
-            } else {
-                Toast.makeText(this, "Error al guardar el carro", Toast.LENGTH_SHORT).show();
-            }
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Año y precio deben ser números válidos", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void buscarCarro(View view) {
-        String marca = etMarca.getText().toString().trim();
-        // Implementar búsqueda según necesidad
-        Toast.makeText(this, "Funcionalidad de búsqueda en desarrollo", Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     public void eliminarCarro(View view) {
-        String modelo = etModelo.getText().toString().trim(); // Aquí tomas el texto del EditText
+        String modelo = etModelo.getText().toString().trim();
         if (modelo.isEmpty()) {
-            Toast.makeText(this, "Ingrese el modelo a eliminar", Toast.LENGTH_SHORT).show();
+            mostrarMensaje("Ingrese el modelo a eliminar");
             return;
         }
 
-        // Buscar el carro por su modelo para obtener su ID
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(
+        try (Cursor cursor = dbHelper.getReadableDatabase().query(
                 TABLE_CARROS,
                 new String[]{COLUMN_ID},
                 COLUMN_MODELO + " = ? COLLATE NOCASE",
                 new String[]{modelo},
                 null, null, null
+        )) {
+            if (cursor.moveToFirst()) {
+                int carroId = cursor.getInt(0);
+                boolean eliminado = dbHelper.eliminarCarro(carroId);
 
-        );
+                mostrarMensaje(eliminado ?
+                        "Carro eliminado correctamente" : "Error al eliminar el carro");
 
-        if (cursor != null && cursor.moveToFirst()) {
-            int carroId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
-            cursor.close();
-
-            // Ahora eliminamos el carro utilizando el ID
-            boolean eliminado = dbHelper.eliminarCarro(carroId);
-            if (eliminado) {
-                Toast.makeText(this, "Carro eliminado correctamente", Toast.LENGTH_SHORT).show();
-                cargarCarros();
-                // Aquí puedes actualizar la lista de carros si tienes alguna vista que las muestre
+                if (eliminado) cargarCarros();
             } else {
-                Toast.makeText(this, "Error al eliminar el carro", Toast.LENGTH_SHORT).show();
+                mostrarMensaje("No se encontró el carro con ese modelo");
             }
-        } else {
-            if (cursor != null) {
-                cursor.close();
-            }
-            Toast.makeText(this, "No se encontró el carro con ese modelo", Toast.LENGTH_SHORT).show();
         }
-
-        db.close();
     }
 
+    private void mostrarMensaje(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
 
     private void limpiarCampos() {
         etMarca.setText("");
@@ -244,19 +222,14 @@ public class Carros extends AppCompatActivity {
         startActivity(new Intent(this, Categorias.class));
     }
 
+    public void LimpiarFiltros(View view) {
+        limpiarCampos();
+        cargarCategorias();
+    }
+
     @Override
     protected void onDestroy() {
         dbHelper.close();
         super.onDestroy();
     }
-
-    public void LimpiarFiltros(View view) {
-        etMarca.setText("");
-        etModelo.setText("");
-        etAnio.setText("");
-        etPrecio.setText("");
-        cargarCategorias(); // Recargar todas las categorías
-    }
-
-
 }

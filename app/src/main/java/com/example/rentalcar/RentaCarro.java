@@ -1,10 +1,6 @@
 package com.example.rentalcar;
 
-<<<<<<< HEAD
-package com.example.rentalcar;
-=======
-package com.example.rentalcar;  // Asegúrate de que esté en el paquete correcto
->>>>>>> 7a29d9ad7ca78d56208dcc2b53687461a8920664
+
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
