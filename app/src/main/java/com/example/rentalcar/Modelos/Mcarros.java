@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Mcarros extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "dbRentCar.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 9;
 
     // Tabla carros
     public static final String TABLE_CARROS = "carros";
