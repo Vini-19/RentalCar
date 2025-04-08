@@ -41,8 +41,10 @@ public class Menu extends AppCompatActivity {
     public void Login(View view){
         startActivity(new Intent(this, Login.class));
     }
-
+    public void RentaCarro(View view){
+        startActivity(new Intent(this, RentaCarro.class));}
     public void Clientes(View view){
         startActivity(new Intent(this, Clientes.class));
     }
+
 }
