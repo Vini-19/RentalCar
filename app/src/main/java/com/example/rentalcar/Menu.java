@@ -16,7 +16,7 @@ import com.example.rentalcar.Modelos.mLogin;
 public class Menu extends AppCompatActivity {
 
     TextView txtNombre;
-    String messg =  "Bienvenido " +mLogin.nombreUsuario;
+    String messg =  "Bienvenido " + mLogin.nombreUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class Menu extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu); // 👈 Aquí se carga la vista
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.txtNumb), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -44,6 +44,10 @@ public class Menu extends AppCompatActivity {
 
     public void Clientes(View view){
         startActivity(new Intent(this, Clientes.class));
+    }
+
+    public void perfil(View view){
+        startActivity(new Intent(this, perfil.class));
     }
 
 }
