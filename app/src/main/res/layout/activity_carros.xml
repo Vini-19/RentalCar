@@ -191,7 +191,7 @@
             android:layout_height="70dp"
             android:backgroundTint="#F6F6F6"
             android:contentDescription="@string/bottom_sheet_behavior"
-            android:onClick="Menu"
+            android:onClick="Cat"
             android:scaleType="centerInside"
             app:layoutDescription="@xml/backup_rules"
             app:srcCompat="@drawable/bakcbutton" />
