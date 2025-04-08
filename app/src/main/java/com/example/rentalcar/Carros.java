@@ -218,8 +218,10 @@ public class Carros extends AppCompatActivity {
         spinnerCategorias.setSelection(0);
     }
 
-    public void Cat(View view) {
-        startActivity(new Intent(this, Categorias.class));
+    public void cat(View view){
+
+        Intent car = new Intent(this,Categorias.class);
+        startActivity(car);
     }
 
     public void LimpiarFiltros(View view) {
@@ -260,7 +262,7 @@ public class Carros extends AppCompatActivity {
         }
     }
 
-// ... (el resto del código se mantiene igual)
+
 
 
 }
