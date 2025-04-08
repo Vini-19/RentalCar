@@ -1,3 +1,5 @@
+package com.example.rentalcar;  // Asegúrate de que esté en el paquete correcto
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,16 +13,20 @@ public class RentaCarro extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_renta_carro);  // Usar el XML correcto
 
-        Button miBoton = findViewById(R.id.miBoton);
+        Button miBoton = findViewById(R.id.button5);
 
-        miBoton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarOpciones();
-            }
-        });
+        if (miBoton != null) {  // Verifica que el botón existe
+            miBoton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mostrarOpciones();
+                }
+            });
+        } else {
+            Toast.makeText(this, "Error: miBoton no encontrado en XML", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void mostrarOpciones() {
@@ -33,7 +39,7 @@ public class RentaCarro extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Acción al seleccionar una opción
-                        Toast.makeText(MainActivity.this, "Seleccionaste: " + opciones[which], Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RentaCarro.this, "Seleccionaste: " + opciones[which], Toast.LENGTH_SHORT).show();
                     }
                 });
 
