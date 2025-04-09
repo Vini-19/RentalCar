@@ -7,4 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".ListadoRentas">
 
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#F6F6F6"
+        android:contentDescription="@string/bottom_sheet_behavior"
+        android:onClick="Carro"
+        android:scaleType="centerInside"
+        app:layoutDescription="@xml/backup_rules"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051"
+        app:srcCompat="@drawable/bakcbutton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
