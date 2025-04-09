@@ -6,12 +6,16 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class ImageHandler {
     public static final int PICK_IMAGE_REQUEST = 1;
     private Activity activity;
-    private Bitmap selectedImage; // Agrega esta línea
+    private Bitmap selectedImage;
 
     public ImageHandler(Activity activity) {
         this.activity = activity;
@@ -27,9 +31,9 @@ public class ImageHandler {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             Uri imageUri = data.getData();
             try {
-                selectedImage = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), imageUri); // Almacena la imagen
+                selectedImage = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), imageUri);
                 imageView.setImageBitmap(selectedImage);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -37,7 +41,7 @@ public class ImageHandler {
 
     public byte[] getImageBytes() {
         if (selectedImage != null) {
-            java.io.ByteArrayOutputStream stream = new java.io.ByteArrayOutputStream();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
             selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
             return stream.toByteArray();
         }

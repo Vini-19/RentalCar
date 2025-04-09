@@ -49,8 +49,8 @@ public class Menu extends AppCompatActivity {
         startActivity(new Intent(this, Clientes.class));
     }
 
-    public void perfil(View view){
-        startActivity(new Intent(this, perfil.class));
+    public void musty(View view){
+        startActivity(new Intent(this, profTrack.class));
     }
 
 }

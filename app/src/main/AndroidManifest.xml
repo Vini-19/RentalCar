@@ -16,6 +16,9 @@
         android:theme="@style/Theme.RentalCar"
         tools:targetApi="31">
         <activity
+            android:name=".profTrack"
+            android:exported="false" />
+        <activity
             android:name=".ListadoRentas"
             android:exported="false" />
         <activity
