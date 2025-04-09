@@ -13,18 +13,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import com.example.rentalcar.Modelos.Mcarros;
 import com.example.rentalcar.Modelos.Mcategoria;
 import com.example.rentalcar.Modelos.CarritoRenta;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class RentaCarro extends AppCompatActivity {
+
     private Mcarros dbCarros;
     private Mcategoria dbCategorias;
     private ArrayList<CarritoRenta> carrito;
-    private ListView listViewCarros;
+    private ArrayList<CarritoRenta> carritoRenta;
+    private ListView listViewCarros, listViewDetalleRenta;
     private TextView tvSubtotal, tvISV, tvTotal;
+    private ArrayAdapter<String> adapterDetalle;
     private int currentCategoryId = -1;
 
     @Override
@@ -32,16 +37,20 @@ public class RentaCarro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_renta_carro);
 
-        // Inicialización segura de componentes
         try {
             dbCarros = new Mcarros(this);
             dbCategorias = new Mcategoria(this);
             carrito = new ArrayList<>();
+            carritoRenta = new ArrayList<>();
 
             listViewCarros = findViewById(R.id.listViewCarros);
+            listViewDetalleRenta = findViewById(R.id.listViewDetalleRenta);
             tvSubtotal = findViewById(R.id.tvSubtotal);
             tvISV = findViewById(R.id.tvISV);
             tvTotal = findViewById(R.id.tvTotal);
+
+            adapterDetalle = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>());
+            listViewDetalleRenta.setAdapter(adapterDetalle);
 
             cargarBotonesCategorias();
 
@@ -49,6 +58,13 @@ public class RentaCarro extends AppCompatActivity {
             if (btnProcesar != null) {
                 btnProcesar.setOnClickListener(v -> procesarPago());
             }
+
+            // Configurar el listener para eliminar items con clic largo
+            listViewDetalleRenta.setOnItemLongClickListener((parent, view, position, id) -> {
+                eliminarDelCarrito(position);
+                return true;
+            });
+
         } catch (Exception e) {
             Toast.makeText(this, "Error al inicializar: " + e.getMessage(), Toast.LENGTH_LONG).show();
             finish();
@@ -131,17 +147,76 @@ public class RentaCarro extends AppCompatActivity {
     }
 
     private void agregarAlCarrito(int carroId, String modelo, String marca, double precio) {
+        boolean encontrado = false;
+
         for (CarritoRenta item : carrito) {
             if (item.getId() == carroId) {
                 item.setCantidad(item.getCantidad() + 1);
-                actualizarTotales();
-                Toast.makeText(this, "Otra unidad de " + modelo, Toast.LENGTH_SHORT).show();
-                return;
+                encontrado = true;
+                break;
             }
         }
-        carrito.add(new CarritoRenta(carroId, modelo, marca, precio, 1));
+
+        if (!encontrado) {
+            carrito.add(new CarritoRenta(carroId, modelo, marca, precio, 1));
+        }
+
+        agregarADetalle(new CarritoRenta(carroId, modelo, marca, precio, 1));
         actualizarTotales();
-        Toast.makeText(this, modelo + " añadido al carrito", Toast.LENGTH_SHORT).show();
+    }
+
+    private void agregarADetalle(CarritoRenta nuevoCarro) {
+        boolean encontrado = false;
+
+        for (CarritoRenta carro : carritoRenta) {
+            if (carro.getId() == nuevoCarro.getId()) {
+                carro.incrementarCantidad();
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            carritoRenta.add(nuevoCarro);
+        }
+
+        actualizarDetalle();
+    }
+
+    private void eliminarDelCarrito(int position) {
+        if (position >= 0 && position < carritoRenta.size()) {
+            CarritoRenta item = carritoRenta.get(position);
+
+            // Buscar el item en el carrito principal
+            for (int i = 0; i < carrito.size(); i++) {
+                if (carrito.get(i).getId() == item.getId()) {
+                    if (item.decrementarCantidad()) {
+                        // Solo reducir cantidad
+                        carrito.get(i).setCantidad(carrito.get(i).getCantidad() - 1);
+                    } else {
+                        // Eliminar completamente
+                        carrito.remove(i);
+                        carritoRenta.remove(position);
+                    }
+                    break;
+                }
+            }
+
+            actualizarDetalle();
+            actualizarTotales();
+            Toast.makeText(this, "Cantidad reducida", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void actualizarDetalle() {
+        ArrayList<String> detalleTexto = new ArrayList<>();
+        for (CarritoRenta c : carritoRenta) {
+            detalleTexto.add(c.getMarca() + " " + c.getModelo() + " x" + c.getCantidad() + " - $" + String.format("%.2f", c.getSubtotal()));
+        }
+
+        adapterDetalle.clear();
+        adapterDetalle.addAll(detalleTexto);
+        adapterDetalle.notifyDataSetChanged();
     }
 
     private void actualizarTotales() {
@@ -163,31 +238,28 @@ public class RentaCarro extends AppCompatActivity {
             return;
         }
 
-        // Aquí iría tu lógica de transacción
         try {
-            // Ejemplo: dbCarros.guardarRenta(carrito);
             Toast.makeText(this, "Renta procesada: " + tvTotal.getText(), Toast.LENGTH_LONG).show();
             carrito.clear();
+            carritoRenta.clear();
             actualizarTotales();
+            actualizarDetalle();
         } catch (Exception e) {
             Toast.makeText(this, "Error al procesar: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    public void Menu(View view){
+    public void Menu(View view) {
         startActivity(new Intent(this, Menu.class));
     }
 
-    public void ListadoRenta(View view){
+    public void ListadoRenta(View view) {
         startActivity(new Intent(this, ListadoRentas.class));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Cerrar conexiones a BD si es necesario
-        if (dbCarros != null) {
-            dbCarros.close();
-        }
+        if (dbCarros != null) dbCarros.close();
     }
 }

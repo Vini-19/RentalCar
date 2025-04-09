@@ -18,14 +18,12 @@ public class CarritoRenta {
         this.cantidad = cantidad;
     }
 
-    // Getters
     public int getId() { return id; }
     public String getModelo() { return modelo; }
     public String getMarca() { return marca; }
     public double getPrecio() { return precio; }
     public int getCantidad() { return cantidad; }
 
-    // Setters con validación
     public void setCantidad(int cantidad) {
         if (cantidad <= 0) throw new IllegalArgumentException("Cantidad debe ser positiva");
         this.cantidad = cantidad;
@@ -37,5 +35,13 @@ public class CarritoRenta {
 
     public void incrementarCantidad() {
         this.cantidad++;
+    }
+
+    public boolean decrementarCantidad() {
+        if (this.cantidad > 1) {
+            this.cantidad--;
+            return true;
+        }
+        return false;
     }
 }
