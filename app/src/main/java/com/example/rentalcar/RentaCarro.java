@@ -253,9 +253,6 @@ public class RentaCarro extends AppCompatActivity {
         startActivity(new Intent(this, Menu.class));
     }
 
-    public void ListadoRenta(View view) {
-        startActivity(new Intent(this, ListadoRentas.class));
-    }
 
     @Override
     protected void onDestroy() {

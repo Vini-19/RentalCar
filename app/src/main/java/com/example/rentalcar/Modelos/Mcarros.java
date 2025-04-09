@@ -29,18 +29,17 @@ public class Mcarros extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CARROS_TABLE = "CREATE TABLE " + TABLE_CARROS + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_MARCA + " TEXT NOT NULL," +
-                COLUMN_MODELO + " TEXT NOT NULL UNIQUE," +
-                COLUMN_ANIO + " INTEGER NOT NULL," +
-                COLUMN_PRECIO + " REAL NOT NULL," +
-                COLUMN_CATEGORIA_ID + " INTEGER," +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_CARROS + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_MARCA + " TEXT NOT NULL, " +
+                COLUMN_MODELO + " TEXT NOT NULL UNIQUE, " +
+                COLUMN_ANIO + " INTEGER NOT NULL, " +
+                COLUMN_PRECIO + " REAL NOT NULL, " +
+                COLUMN_CATEGORIA_ID + " INTEGER, " +
                 "FOREIGN KEY(" + COLUMN_CATEGORIA_ID + ") REFERENCES " +
-                TABLE_CATEGORIAS + "(" + COLUMN_ID + "))";
-
-        db.execSQL(CREATE_CARROS_TABLE);
+                TABLE_CATEGORIAS + "(" + COLUMN_ID + "))");
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
