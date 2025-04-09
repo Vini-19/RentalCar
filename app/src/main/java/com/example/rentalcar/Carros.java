@@ -210,6 +210,7 @@ public class Carros extends AppCompatActivity {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
+
     private void limpiarCampos() {
         etMarca.setText("");
         etModelo.setText("");
@@ -218,10 +219,8 @@ public class Carros extends AppCompatActivity {
         spinnerCategorias.setSelection(0);
     }
 
-    public void cat(View view){
-
-        Intent car = new Intent(this,Categorias.class);
-        startActivity(car);
+    public void Cat(View view) {
+        startActivity(new Intent(this, Categorias.class));
     }
 
     public void LimpiarFiltros(View view) {
@@ -262,7 +261,7 @@ public class Carros extends AppCompatActivity {
         }
     }
 
-
+// ... (el resto del código se mantiene igual)
 
 
 }

@@ -37,6 +37,9 @@ public class Menu extends AppCompatActivity {
     public void Categoria(View view){
         startActivity(new Intent(this, Categorias.class));
     }
+    public void Carro(View view){
+        startActivity(new Intent(this, RentaCarro.class));
+    }
 
     public void Login(View view){
         startActivity(new Intent(this, Login.class));

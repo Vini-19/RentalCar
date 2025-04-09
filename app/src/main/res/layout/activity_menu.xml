@@ -87,7 +87,7 @@
         android:layout_height="80dp"
         android:backgroundTint="#F6F6F6"
         android:contentDescription="photo"
-        android:onClick="RentaCarro"
+        android:onClick="Carro"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

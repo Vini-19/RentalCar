@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
 public class Mcategoria extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "dbRentCar.db";
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
 
     // Tabla categorías
     public static final String TABLE_CATEGORIAS = "categorias";
@@ -17,7 +16,6 @@ public class Mcategoria extends SQLiteOpenHelper {
     public static final String COLUMN_NOMBRE = "nombre";
     public static final String COLUMN_DESCRIPCION = "descripcion";
 
-    // Crear la tabla SQL
     private static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_CATEGORIAS + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -25,17 +23,8 @@ public class Mcategoria extends SQLiteOpenHelper {
                     COLUMN_DESCRIPCION + " TEXT" +
                     ")";
 
-    private Context context;
-
     public Mcategoria(Context context) {
-        super(context, getDatabasePath(context), null, DATABASE_VERSION);
-        this.context = context;
-    }
-
-    // Método para obtener la ruta de la base de datos en el almacenamiento externo
-    private static String getDatabasePath(Context context) {
-        // Usamos el contexto para obtener el path
-        return context.getExternalFilesDir(null).getPath() + "/" + DATABASE_NAME;
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -45,15 +34,10 @@ public class Mcategoria extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 9) {
-            // Si es necesario, puedes agregar nuevas columnas u otras modificaciones aquí
-            db.execSQL("ALTER TABLE " + TABLE_CATEGORIAS + " ADD COLUMN nueva_columna TEXT");
-        }
-
-        // Asegura que la tabla sea recreada correctamente
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIAS);
         onCreate(db);
     }
+
     public boolean guardarCategoria(String nombre, String descripcion) {
         try (SQLiteDatabase db = this.getWritableDatabase()) {
             ContentValues values = new ContentValues();
